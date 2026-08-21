@@ -1,4 +1,9 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+
+def validar_precio_positivo(value): 
+    if value <= 0:
+        raise ValidationError('El precio debe ser un númeromayor a 0.')
 
 # Create your models here.
 class Producto(models.Model):
@@ -14,6 +19,9 @@ class Producto(models.Model):
 
     def __str__(self):
         return f"{self.nombre} - ${self.precio}"
+
+    #Soporte para archivos multimedia (media files)
+    imagen = models.ImageField(upload_to='productos/', null=True, blank=True)
 
 class Pedido(models.Model):
     ESTADOS = [
